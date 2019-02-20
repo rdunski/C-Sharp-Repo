@@ -4,65 +4,99 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/* Project 4: SuperHero Rankings
+
+// Made by: Robert Dunski
+// For: Advanced Programming: C# with John Dobbs
+
+// This program takes user-entered superhero information and ranks them based on shortness
+// (smallest heros are on the top)
+
+*/
+
 namespace SuperHero
 {
-  public class Ranking {
-    /// SuperHero rankings.
-    ///
-    /// Define a SuperHero class, including members representing at least:
-    ///     first name,
-    ///     last name,
-    ///     height,
-    ///     power
-    /// (If you would like to use or include other members, that's fine.)
-    ///
-    /// Instances of your SuperHero class are going to be stored in
-    /// a generic List<T> of SuperHeroes (List<SuperHero>).
-    ///
-    /// In order to sort you List<T> of SuperHeroes, or to find an individual SuperHero,
-    /// You will need to inherit from the following classes or interfaces:
-    ///     IComparable<T> and
-    ///     IEquatable<T>
-    /// (See
-    ///     List<T> Class https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=netframework-4.7.2,
-    ///     IComparable<T> Interface https://docs.microsoft.com/en-us/dotnet/api/system.icomparable-1?view=netframework-4.7.2,
-    ///     IEquatable<T> Interface https://docs.microsoft.com/en-us/dotnet/api/system.iequatable-1?view=netframework-4.7.2)
-    ///
-    /// You will need to implement the methods required by these classes
-    /// or interfaces in order to be able to compare or equate two SuperHero objects.
-    /// This is how you will form your ranking of SuperHeroes.
-    /// Also implement a ToString() method to output a representation
-    /// of your SuperHero.
-    ///
-    /// With your new SuperHero class, write a simple user interface
-    /// to collect and populate SuperHero instances and store them in
-    /// a List<T> collection.  (Again, this project might best
-    /// be designed as two classes in separate files or projects.
-    /// Try to not mix user interface and functionality.)
-    ///
-    /// Finally, sort your list of SuperHeroes and display your
-    /// ranking of SuperHeroes.  Who's the best SuperHero?
-    ///
+  public class SuperHero : IComparable {
+    string fname;
+    string lname;
+    double height;
+    string power;
+
+    public SuperHero (string f, string l, double h, string p)
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Welcome to the SuperHero Data System");
+      fname = f;
+      lname = l;
+      height = h;
+      power = p;
+    }
+    public int CompareTo (object obj){
+      if (obj == null) return 1;
+      SuperHero secondHero = (SuperHero)obj;
 
-			/// Declare a generic list (List<T>) of SuperHeroes
+      if (secondHero != null)
+          return this.height.CompareTo(secondHero.height);
+      else
+          return 1;
+    }
 
-			/// User interface to collect data about SuperHeroes
-			/// and add SuperHero to List.
-
-			/// Display unranked SuperHeroes
-
-			/// Sort SuperHeroes to form ranking
-
-			/// Display SuperHeroes in order of greatness
-
-
-            Console.WriteLine("Press any key to continue");
-            Console.ReadKey();
-        }
+    public override string ToString() {
+      return fname + " " + lname + " has " + power + " and is " + height + " meters tall.";
     }
   }
+
+  public class Ranking {
+      static void Main(string[] args)
+      {
+        List<SuperHero> sList = new List<SuperHero>();
+        SuperHero hero;
+
+        Console.WriteLine("Welcome to the SuperHero Data System");
+
+        while(true){
+
+          Console.WriteLine("Enter a superhero's first name");
+          string first = Console.ReadLine();
+
+          Console.WriteLine("Enter the superhero's last name");
+          string last = Console.ReadLine();
+
+          Console.WriteLine("Enter the superhero's height in meters");
+          double height = Convert.ToDouble(Console.ReadLine());
+
+          Console.WriteLine("Enter the superhero's power");
+          string power = Console.ReadLine();
+
+          hero = new SuperHero(first,last,height,power);
+          sList.Add(hero);
+
+          Console.WriteLine("Would you like to add another superhero?");
+          string decision = Console.ReadLine();
+
+          if (decision == "y" || decision == "yes")
+            continue;
+          else
+            break;
+
+          }
+        Console.WriteLine("Unranked Heros:");
+
+        foreach (SuperHero superhero in sList) {
+          Console.WriteLine(superhero.ToString());
+        }
+
+        sList.Sort();
+
+        Console.WriteLine("Ranked Heros, Smallest is Best:");
+
+        int counter = 1;
+
+        foreach (SuperHero superhero in sList) {
+          Console.WriteLine("{0}: {1}",counter, superhero.ToString());
+          counter++;
+        }
+
+          Console.WriteLine("Press any key to continue");
+          Console.ReadKey();
+      }
+    }
 }

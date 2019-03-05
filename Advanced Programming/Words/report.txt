@@ -1,0 +1,6 @@
+There are 113809 words in the file
+The longest word is counterdemonstrations
+The shortest word is aa
+The average length is 7.93351140946674
+The first word is aa
+The last word is zymurgy

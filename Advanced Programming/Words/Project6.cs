@@ -44,6 +44,7 @@ namespace Words
         {
           int wordCount = 0;
           string longWord = "";
+          string shortWord;
           Console.WriteLine("Welcome to Words!");
           string[] lines = File.ReadAllLines("words.txt");
           foreach (string line in lines)
